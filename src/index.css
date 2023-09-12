@@ -1,9 +1,10 @@
 :root {
-    --gray-100: #f7f7f7;
-    --gray-500: #929aab;
-    --purple-900: #2d1e2f;
-    --gray-200: #eeeeee;
-    --green: #a9e5bb;
+    --Gray-100: #f7f7f7;
+    --Gray-500: #929aab;
+    --Purple-900: #2d1e2f;
+    --Gray-200: #eeeeee;
+    --Green: #a9e5bb;
+    --Yellow: #fcf6b1;
 }
 
 body {

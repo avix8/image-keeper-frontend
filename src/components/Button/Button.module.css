@@ -8,7 +8,7 @@
     display: flex;
     gap: 10px;
     border-radius: 10px;
-    background: var(--gray-200);
+    background: var(--Gray-200);
 
     color: var(--purple-800);
     font-family: Inter;
@@ -19,36 +19,31 @@
     letter-spacing: -0.45px;
 }
 
+.button:hover {
+    background: var(--Green);
+}
+
+.button:disabled {
+    cursor: default;
+    background: var(--Gray-200);
+    color: var(--Gray-500);
+}
+
+.text:hover {
+    background: none;
+}
+
 .text {
-    overflow: visible;
-    background: transparent;
+    background: none;
+    color: var(--Yellow, #fcf6b1);
     padding: 0;
-    box-shadow: none;
-}
 
-.rounded {
-    border-radius: 100vmax;
-}
+    font-family: Inter;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 125%; /* 22.5px */
+    letter-spacing: -0.54px;
 
-.block {
-    width: 100%;
-}
-
-.icon {
-    flex-shrink: 0;
-    color: var(--accent-primary);
-    stroke: var(--accent-primary);
-    fill: var(--accent-primary);
-}
-
-.small {
-    padding: 8px;
-}
-
-.stacked {
-    flex-direction: column;
-    width: fit-content;
-    gap: 4px;
-    font-size: 12px;
-    font-weight: 600;
+    justify-content: left;
 }

@@ -1,0 +1,61 @@
+.imageCard {
+    height: 200px;
+    max-width: 335px;
+    margin-top: 13px;
+    position: relative;
+    border-radius: 10px;
+    background: lightgray 50% / cover no-repeat;
+}
+
+.image {
+    border-radius: inherit;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.label {
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    background: var(--Yellow);
+
+    color: var(--gray-900);
+    text-align: right;
+    font-family: Inter;
+    font-size: 12.5px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 125%; /* 15.625px */
+    letter-spacing: -0.375px;
+}
+
+.overlay {
+    position: absolute;
+    border-radius: inherit;
+    visibility: hidden;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: linear-gradient(
+        0deg,
+        rgba(57, 62, 70, 0.5) 0%,
+        rgba(57, 62, 70, 0.5) 100%
+    );
+}
+
+.imageCard:hover > .overlay {
+    visibility: visible;
+}
+
+.buttons {
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}

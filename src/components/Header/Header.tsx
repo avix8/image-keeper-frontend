@@ -20,7 +20,11 @@ const Header = (props: HeaderProps) => {
                     {props.isLoading ? "" : getInfo(props.imageAmount)}
                 </div>
             </div>
-            <Button prependIcon="upload" children="Upload image" />
+            <Button
+                disabled={props.isLoading}
+                prependIcon="upload"
+                children="Upload image"
+            />
         </header>
     );
 };
