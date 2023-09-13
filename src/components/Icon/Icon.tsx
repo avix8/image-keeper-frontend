@@ -8,11 +8,11 @@ function useDynamicSVGImport(name: string) {
     > | null>(null);
 
     useEffect(() => {
-        import(`!!@svgr/webpack?-svgo,+titleProp,+ref!./res/${name}.svg`).then(
-            (file) => {
-                setSvgIcon(file.default);
-            }
-        );
+        import(
+            `!!@svgr/webpack?-svgo,+titleProp,+ref!../../assets/icons/${name}.svg`
+        ).then((file) => {
+            setSvgIcon(file.default);
+        });
     }, [name]);
 
     return SvgIcon;

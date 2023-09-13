@@ -1,7 +1,11 @@
+import { memo } from "react";
 import Button from "../Button";
 import styles from "./ImageCard.module.css";
+import app from "../../store/app";
+import { downloadImage } from "../../services/images";
 
 type ImageProps = {
+    _id: string;
     src?: string;
     label?: string;
     date?: number;
@@ -21,9 +25,13 @@ const getDefaultLabel = (date: number) => {
 const ImageCard = (props: ImageProps) => {
     const label = props.label ?? getDefaultLabel(props.uploadDate);
 
-    const download = () => {};
+    const download = () => {
+        downloadImage(props._id);
+    };
     const edit = () => {};
-    const deleteAction = () => {};
+    const deleteAction = () => {
+        app.delete(props._id);
+    };
 
     const buttons = [
         { icon: "download", title: "Download", onClick: download },
@@ -52,4 +60,4 @@ const ImageCard = (props: ImageProps) => {
     );
 };
 
-export default ImageCard;
+export default memo(ImageCard);

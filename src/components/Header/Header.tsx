@@ -1,7 +1,8 @@
-import Button from "../Button";
 import styles from "./Header.module.css";
 
-import { ReactComponent as Logo } from "./res/logo.svg";
+import { ReactComponent as Logo } from "../../assets/logo.svg";
+import UploadButton from "../UploadButton";
+import app from "../../store/app";
 
 type HeaderProps = {
     isLoading: boolean;
@@ -20,11 +21,7 @@ const Header = (props: HeaderProps) => {
                     {props.isLoading ? "" : getInfo(props.imageAmount)}
                 </div>
             </div>
-            <Button
-                disabled={props.isLoading}
-                prependIcon="upload"
-                children="Upload image"
-            />
+            <UploadButton disabled={app.isLoading} />
         </header>
     );
 };

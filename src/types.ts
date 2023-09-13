@@ -4,3 +4,8 @@ export type Image = {
     src: string;
     uploadDate: number;
 };
+
+export type Group = {
+    title: string;
+    images: Image[];
+};

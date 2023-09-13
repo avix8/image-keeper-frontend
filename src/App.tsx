@@ -1,34 +1,29 @@
 import React, { useEffect, useState } from "react";
-import { getPhotos, uploadPhoto } from "./services/photos";
-import { Image } from "./types";
 
 import styles from "./App.module.css";
 import Header from "./components/Header";
 import ImageGroup from "./components/ImageGroup/ImageGroup";
 
+import app from "./store/app";
+import { observer } from "mobx-react-lite";
+import EmptyApp from "./components/EmptyApp/EmptyApp";
 
 function App() {
-    const [isLoading, setIsLoading] = useState(true);
-    const [images, setImages] = useState<Image[]>([]);
-
-    useEffect(() => {
-        setIsLoading(true);
-        getPhotos()
-            .then((data) => {
-                setImages(data);
-            })
-            .finally(() => {
-                setIsLoading(false);
-            });
-    }, []);
+    const showApp = true || app.isLoading || app.images.length !== 0;
 
     return (
         <div className={styles.app}>
-            <Header isLoading={isLoading} imageAmount={images.length} />
-            <ImageGroup title="September' 23" images={images} />
-            <ImageGroup title="August' 23" images={images} />
+            <div style={{ visibility: showApp ? "visible" : "hidden" }}>
+                <Header
+                    isLoading={app.isLoading}
+                    imageAmount={app.images.length}
+                />
+                {Array.from(app.groups.values()).map(({ title, images }) => (
+                    <ImageGroup key={title} title={title} images={images} />
+                ))}
+            </div>
         </div>
     );
 }
 
-export default App;
+export default observer(App);
