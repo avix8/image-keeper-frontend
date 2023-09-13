@@ -6,44 +6,22 @@ import ImageGroup from "./components/ImageGroup/ImageGroup";
 
 import app from "./store/app";
 import { observer } from "mobx-react-lite";
-import ModalContent from "./components/ModalContent";
 import ModalWindow from "./components/ModalWindow";
 import ImageDrop from "./components/ImageDrop";
-import { ReactComponent as UploadLarge } from "./assets/icons/uploadLarge.svg";
-import { ReactComponent as Logo } from "./assets/logo.svg";
-import UploadButton from "./components/UploadButton";
 import EditLabel from "./components/EditLabel";
 import Button from "./components/Button";
 import Notifications from "./components/Notifications";
+import DragOverContent from "./components/DragOverContent";
+import EmptyContent from "./components/EmptyContent";
 
 const getModalContent = (
     isDragOver: boolean,
     isEditing: boolean,
     isEmpty: boolean
 ) => {
-    if (isDragOver)
-        return (
-            <ModalContent
-                icon={<UploadLarge />}
-                title="Upload file"
-                subTitle="Drop your file here to start uploading"
-            />
-        );
-
-    if (isEmpty)
-        return (
-            <ModalContent
-                icon={<Logo style={{ paddingBottom: 45 }} />}
-                title="No images uploaded yet"
-                subTitle="Upload your first image by drag and dropping the file on the
-screen or click the button below"
-                action={<UploadButton />}
-            />
-        );
-    if (isEditing) {
-        return <EditLabel />;
-    }
-
+    if (isDragOver) return <DragOverContent />;
+    if (isEmpty) return <EmptyContent />;
+    if (isEditing) return <EditLabel />;
     return null;
 };
 
@@ -72,9 +50,8 @@ function App() {
                             />
                         ) : undefined
                     }
-                >
-                    {modalContent}
-                </ModalWindow>
+                    children={modalContent}
+                />
 
                 <div style={style}>
                     <Header
