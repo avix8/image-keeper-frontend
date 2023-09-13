@@ -1,12 +1,16 @@
-import styles from "./EmptyApp.module.css";
+import styles from "./UploadImage.module.css";
 
-import { ReactComponent as Logo } from "../../assets/logo.svg";
+import { ReactComponent as UploadLarge } from "../../assets/icons/uploadLarge.svg";
 import UploadButton from "../UploadButton";
 
-const EmptyApp = () => {
+type UploadImageProps = {
+    style?: React.CSSProperties;
+};
+
+const UploadImage = (props: UploadImageProps) => {
     return (
-        <div className={styles.container}>
-            <Logo />
+        <div className={styles.container} {...props}>
+            <UploadLarge />
             <div className={styles.info}>
                 <div className={styles.title}>No images uploaded yet</div>
                 <div className={styles.subTitle}>
@@ -19,4 +23,4 @@ const EmptyApp = () => {
     );
 };
 
-export default EmptyApp;
+export default UploadImage;

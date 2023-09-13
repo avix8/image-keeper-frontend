@@ -3,6 +3,7 @@ export type Image = {
     name: string;
     src: string;
     uploadDate: number;
+    label?: string;
 };
 
 export type Group = {

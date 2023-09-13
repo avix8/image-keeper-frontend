@@ -1,8 +1,10 @@
-import { memo } from "react";
 import Button from "../Button";
 import styles from "./ImageCard.module.css";
 import app from "../../store/app";
 import { downloadImage } from "../../services/images";
+import uploads from "../../store/uploads";
+import { observer } from "mobx-react-lite";
+import classnames from "classnames";
 
 type ImageProps = {
     _id: string;
@@ -10,6 +12,8 @@ type ImageProps = {
     label?: string;
     date?: number;
     uploadDate: number;
+    hideLabel?: boolean;
+    disabled?: boolean;
 };
 
 const getDefaultLabel = (date: number) => {
@@ -22,13 +26,29 @@ const getDefaultLabel = (date: number) => {
     return `${day} ${month}`;
 };
 
+const getProgressInfo = (id: string) => {
+    return `${Math.floor(
+        (uploads.loaded.get(id) ?? 0) / 1024
+    )}kb of ${Math.floor((uploads.total.get(id) ?? 0) / 1024)}kb`;
+};
+
+const getPercent = (id: string) => {
+    return `${Math.floor(
+        ((uploads.loaded.get(id) ?? 0) * 100) / (uploads.total.get(id) ?? 1)
+    )}%`;
+};
+
 const ImageCard = (props: ImageProps) => {
-    const label = props.label ?? getDefaultLabel(props.uploadDate);
+    const label = props.label?.length
+        ? props.label
+        : getDefaultLabel(props.uploadDate);
 
     const download = () => {
         downloadImage(props._id);
     };
-    const edit = () => {};
+    const edit = () => {
+        app.editLabel(props._id);
+    };
     const deleteAction = () => {
         app.delete(props._id);
     };
@@ -39,25 +59,46 @@ const ImageCard = (props: ImageProps) => {
         { icon: "delete", title: "Delete", onClick: deleteAction },
     ];
 
+    const isUploading = !!uploads.total.get(props._id);
+
     return (
         <div className={styles.imageCard}>
-            <img className={styles.image} src={props.src} alt="" />
-            <div className={styles.overlay}>
-                <div className={styles.buttons}>
-                    {buttons.map(({ icon, title, onClick }) => (
-                        <Button
-                            text
-                            prependIcon={icon}
-                            children={title}
-                            onClick={onClick}
-                            key={title}
-                        />
-                    ))}
+            {!app.isLoading && (
+                <img className={styles.image} src={props.src} alt="" />
+            )}
+            {props.disabled ? null : isUploading ? (
+                <div className={classnames(styles.overlay, styles.uploading)}>
+                    <div
+                        className={styles.progress}
+                        style={{
+                            width: getPercent(props._id),
+                        }}
+                    ></div>
+                    <div className={styles.uploadInfo}>
+                        <div className={styles.uploadTitle}>Uploading</div>
+                        {getProgressInfo(props._id)}
+                    </div>
                 </div>
-            </div>
-            <div className={styles.label}>{label}</div>
+            ) : (
+                <div className={styles.overlay}>
+                    <div className={styles.buttons}>
+                        {buttons.map(({ icon, title, onClick }) => (
+                            <Button
+                                text
+                                prependIcon={icon}
+                                children={title}
+                                onClick={onClick}
+                                key={title}
+                            />
+                        ))}
+                    </div>
+                </div>
+            )}
+            {!props.hideLabel && !app.isLoading && (
+                <div className={styles.label}>{label}</div>
+            )}
         </div>
     );
 };
 
-export default memo(ImageCard);
+export default observer(ImageCard);

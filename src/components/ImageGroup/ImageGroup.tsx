@@ -1,7 +1,10 @@
+import { observer } from "mobx-react-lite";
 import { Image } from "../../types";
 import ImageCard from "../ImageCard";
 
 import styles from "./ImageGroup.module.css";
+import classnames from "classnames";
+import app from "../../store/app";
 
 type ImageGroupProps = {
     title: string;
@@ -11,9 +14,19 @@ type ImageGroupProps = {
 const ImageGroup = (props: ImageGroupProps) => {
     return (
         <div className={styles.imageGroup}>
-            <div className={styles.title}>
-                {props.title}
-                <div className={styles.amount}>{props.images.length}</div>
+            <div
+                className={classnames(styles.title, {
+                    [styles.loading]: app.isLoading,
+                })}
+            >
+                {!app.isLoading && (
+                    <>
+                        {props.title}
+                        <div className={styles.amount}>
+                            {props.images.length}
+                        </div>
+                    </>
+                )}
             </div>
             <div className={styles.imageList}>
                 {props.images.map((image) => (
@@ -24,4 +37,4 @@ const ImageGroup = (props: ImageGroupProps) => {
     );
 };
 
-export default ImageGroup;
+export default observer(ImageGroup);

@@ -1,3 +1,4 @@
+import { AxiosProgressEvent } from "axios";
 import axios from "./init";
 
 export const getImages = () => {
@@ -27,25 +28,27 @@ export const deleteImage = (id: string) => {
 
 export const uploadImage = async (
     file: File | undefined,
-    setPercent: (percent: number) => void
+    onUploadProgress: (event: AxiosProgressEvent) => void
 ) => {
     if (!file) return;
     let form = new FormData();
     form.set("image", file);
 
-    axios.post("/image/upload", form, {
-        headers: {
-            "content-type": "multipart/form-data",
-        },
-        onUploadProgress(progressEvent) {
-            console.log(progressEvent);
+    return axios
+        .post("/image/upload", form, {
+            headers: {
+                "content-type": "multipart/form-data",
+            },
+            onUploadProgress,
+        })
+        .then(({ data }) => data.id);
+};
 
-            if (progressEvent.total)
-                setPercent(
-                    Math.round(
-                        (progressEvent.loaded * 100) / progressEvent.total
-                    )
-                );
-        },
-    });
+export const setLabel = (id: string, label: string) => {
+    return axios
+        .post("/image/setLabel", {
+            id,
+            label,
+        })
+        .then(({ data }) => data);
 };

@@ -1,6 +1,11 @@
-.empty {
-    height: 100dvh;
+.app {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    height: 100dvh;
+    position: relative;
+}
+
+.container {
+    flex: 1;
+    overflow: auto;
 }

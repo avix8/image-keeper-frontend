@@ -1,5 +1,6 @@
 import { makeAutoObservable } from "mobx";
-import { getImages, deleteImage } from "../services/images";
+import { getImages, deleteImage, setLabel } from "../services/images";
+import { v4 as uuidv4 } from "uuid";
 
 import { Image, Group } from "../types";
 
@@ -13,14 +14,22 @@ const getGroupTitle = (date: number) => {
     return `${month} ‘${year}`;
 };
 
+const generateImage = () => ({
+    _id: uuidv4(),
+    uploadDate: Date.now(),
+    name: "",
+    src: "",
+});
+
 class App {
     isLoading: boolean = true;
+    editing: Image | null = null;
     images: Image[] = [];
     groups: Map<string, Group> = new Map();
 
     constructor() {
         makeAutoObservable(this);
-
+        this.setImages(Array(5).fill(0).map(generateImage));
         getImages()
             .then(this.setImages)
             .finally(() => this.setLoading(false));
@@ -49,14 +58,41 @@ class App {
         );
     };
 
-    upload() {}
+    editLabel(id: string) {
+        this.editing = this.images.find((image) => image._id === id) ?? null;
+    }
 
-    deleteSuccess = (id: string) => {
-        this.setImages(this.images.filter((image) => image._id !== id));
-    };
+    saveLabel(label: string) {
+        if (!this.editing) return;
+        setLabel(this.editing._id, label);
+        this.setImages(
+            this.images.map((image) =>
+                image._id === this.editing?._id ? { ...image, label } : image
+            )
+        );
+
+        this.editing = null;
+    }
+
+    cancelEdit() {
+        this.editing = null;
+    }
 
     delete(id: string) {
-        deleteImage(id).then(this.deleteSuccess);
+        this.setImages(this.images.filter((image) => image._id !== id));
+        deleteImage(id);
+    }
+
+    addImages(images: Image[]) {
+        this.setImages(images.concat(this.images));
+    }
+
+    updateId(previousId: string, newId: string) {
+        this.setImages(
+            this.images.map((image) =>
+                image._id === previousId ? { ...image, _id: newId } : image
+            )
+        );
     }
 }
 
