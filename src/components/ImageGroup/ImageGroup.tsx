@@ -21,10 +21,8 @@ const ImageGroup = (props: ImageGroupProps) => {
             >
                 {!app.isLoading && (
                     <>
-                        {props.title}
-                        <div className={styles.amount}>
-                            {props.images.length}
-                        </div>
+                        <h1>{props.title}</h1>
+                        <h3 className={styles.amount}>{props.images.length}</h3>
                     </>
                 )}
             </div>

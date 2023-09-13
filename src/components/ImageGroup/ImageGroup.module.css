@@ -6,14 +6,6 @@
     display: flex;
     gap: 15px;
     color: var(--Gray-200, #eee);
-
-    /* Heading 1 */
-    font-family: Inter;
-    font-size: 31.104px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 110%; /* 34.214px */
-    letter-spacing: -0.933px;
 }
 
 .loading {
@@ -37,14 +29,6 @@
 
     color: #fff;
     text-align: right;
-
-    /* Heading 3 */
-    font-family: Inter;
-    font-size: 21.6px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 110%; /* 23.76px */
-    letter-spacing: -0.648px;
 }
 
 .imageList {

@@ -9,11 +9,7 @@
 .info {
     margin-top: 13px;
     color: var(--Gray-500);
-    font-family: Inter;
     font-size: 12.5px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 125%;
     letter-spacing: -0.375px;
     height: 15px;
 }

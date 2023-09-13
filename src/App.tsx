@@ -14,6 +14,7 @@ import { ReactComponent as Logo } from "./assets/logo.svg";
 import UploadButton from "./components/UploadButton";
 import EditLabel from "./components/EditLabel";
 import Button from "./components/Button";
+import Notifications from "./components/Notifications";
 
 const getModalContent = (
     isDragOver: boolean,
@@ -58,6 +59,7 @@ function App() {
 
     return (
         <div className={styles.app}>
+            <Notifications />
             <ImageDrop setIsDragOver={setIsDragOver}>
                 <ModalWindow
                     visible={!!modalContent}

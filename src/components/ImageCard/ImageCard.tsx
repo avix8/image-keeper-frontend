@@ -60,12 +60,10 @@ const ImageCard = (props: ImageProps) => {
     ];
 
     const isUploading = !!uploads.total.get(props._id);
-
+    if (app.isLoading) return <div className={styles.imageCard}></div>;
     return (
         <div className={styles.imageCard}>
-            {!app.isLoading && (
-                <img className={styles.image} src={props.src} alt="" />
-            )}
+            <img className={styles.image} src={props.src} alt="" />
             {props.disabled ? null : isUploading ? (
                 <div className={classnames(styles.overlay, styles.uploading)}>
                     <div
@@ -75,7 +73,7 @@ const ImageCard = (props: ImageProps) => {
                         }}
                     ></div>
                     <div className={styles.uploadInfo}>
-                        <div className={styles.uploadTitle}>Uploading</div>
+                        <h3 className={styles.uploadTitle}>Uploading</h3>
                         {getProgressInfo(props._id)}
                     </div>
                 </div>
@@ -94,9 +92,7 @@ const ImageCard = (props: ImageProps) => {
                     </div>
                 </div>
             )}
-            {!props.hideLabel && !app.isLoading && (
-                <div className={styles.label}>{label}</div>
-            )}
+            {!props.hideLabel && <div className={styles.label}>{label}</div>}
         </div>
     );
 };

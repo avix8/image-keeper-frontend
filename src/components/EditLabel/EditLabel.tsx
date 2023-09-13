@@ -16,7 +16,7 @@ const EditLabel = () => {
 
     return (
         <div className={styles.container}>
-            <div className={styles.title}>Set custom label</div>
+            <h2 className={styles.title}>Set custom label</h2>
             <div>
                 <ImageCard
                     src={app.editing.src}

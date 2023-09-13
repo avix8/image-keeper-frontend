@@ -63,7 +63,11 @@ class App {
     }
 
     saveLabel(label: string) {
-        if (!this.editing) return;
+        // if (!this.editing || !label.length) {
+        if (!this.editing) {
+            this.editing = null;
+            return;
+        }
         setLabel(this.editing._id, label);
         this.setImages(
             this.images.map((image) =>

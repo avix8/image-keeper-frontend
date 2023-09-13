@@ -13,7 +13,7 @@ const ModalContent = (props: ModalContentProps) => {
     return (
         <div className={styles.container} style={props.style}>
             {props.icon}
-            <div className={styles.title}>{props.title}</div>
+            <h1 className={styles.title}>{props.title}</h1>
             <div className={styles.subTitle}>{props.subTitle}</div>
             <div className={styles.action}>{props.action}</div>
         </div>
